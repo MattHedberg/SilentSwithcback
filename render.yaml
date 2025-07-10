@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: tiktok-automation-dashboard
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python main.py --serve"
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ELEVENLABS_API_KEY
+        sync: false
+      - key: VOICE_ID
+        sync: false
+
+cronJobs:
+  - name: morning_post
+    schedule: "0 9 * * *"
+    command: "python main.py --run"
+  - name: afternoon_post
+    schedule: "0 13 * * *"
+    command: "python main.py --run"
+  - name: evening_post
+    schedule: "0 20 * * *"
+    command: "python main.py --run"
